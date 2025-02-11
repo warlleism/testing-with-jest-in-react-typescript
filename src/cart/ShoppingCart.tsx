@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { ShoppingCartContext } from "../context/CartProvider";
 
-const ShoppingCart = () => {
+export default function ShoppingCart() {
 
   const shoppingCartContext = useContext(ShoppingCartContext);
 
@@ -9,19 +9,21 @@ const ShoppingCart = () => {
     return null;
   }
 
-  const { items } = shoppingCartContext;
+  const { items, incrementQuantity, decrementQuantity } = shoppingCartContext;
 
   return (
     <div>
       {
         items.map((item: any) => (
           <div key={item.id}>
-            {item.name} - {item.price}
+            <div>
+              {item.name} - {item.price}
+            </div>
+            <div onClick={() => incrementQuantity(item.id)}>increment</div>
+            <div onClick={() => decrementQuantity(item.id)}>decrement</div>
           </div>
         ))
       }
     </div>
   );
 };
-
-export default ShoppingCart;

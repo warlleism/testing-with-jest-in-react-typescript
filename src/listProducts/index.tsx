@@ -21,8 +21,8 @@ export default function ListProducts() {
     ]);
 
     const handleClick = (product: any) => {
-        addItem(product);
-
+        const newItem = { ...product, quantity: 1 };
+        addItem(newItem);
         setTimeout(() => {
             navigate("/cart");
         }, 1000)

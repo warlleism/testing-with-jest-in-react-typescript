@@ -7,6 +7,8 @@ import ListProducts from '../listProducts';
 const mockAddItem = jest.fn();
 const mockSetItems = jest.fn();
 const mockRemoveItem = jest.fn();
+const mockIncrementQuantity = jest.fn();
+const mockDecrementQuantity = jest.fn();
 
 const mockShoppingCartContext = {
     addItem: (item: any) => {
@@ -14,6 +16,26 @@ const mockShoppingCartContext = {
         mockAddItem(item);
     },
     items: [] as any[],
+    incrementQuantity: (id: number) => {
+        mockShoppingCartContext.items = mockShoppingCartContext.items.map((item: any) => {
+            if (item.id === id) {
+                return { ...item, quantity: item.quantity + 1 };
+            } else {
+                return item;
+            }
+        });
+        mockIncrementQuantity(id);
+    },
+    decrementQuantity: (id: number) => {
+        mockShoppingCartContext.items = mockShoppingCartContext.items.map((item: any) => {
+            if (item.id === id) {
+                return { ...item, quantity: item.quantity - 1 };
+            } else {
+                return item;
+            }
+        });
+        mockDecrementQuantity(id);
+    },
     setItems: (items: React.SetStateAction<any[]>) => {
         mockShoppingCartContext.items = typeof items === 'function'
             ? items(mockShoppingCartContext.items)
