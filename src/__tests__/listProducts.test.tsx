@@ -55,10 +55,18 @@ jest.mock('react-router-dom', () => ({
 
 describe('ListProducts Component', () => {
 
+    let mockItem: any;
+
     beforeEach(() => {
-        jest.clearAllMocks();
-        (useNavigate as jest.Mock).mockReset();
+        mockItem = [
+            { id: 1, name: 'Product 1', price: 10.99, quantity: 1 },
+            { id: 2, name: 'Product 2', price: 9.99, quantity: 1 },
+            { id: 3, name: 'Product 3', price: 7.99, quantity: 1 },
+        ];
+
+        mockShoppingCartContext.items = mockItem;
     });
+
 
     test('renders list of products', () => {
         render(
@@ -67,13 +75,8 @@ describe('ListProducts Component', () => {
             </ShoppingCartContext.Provider>
         );
 
-        const products = [
-            { id: 1, name: 'Product 1', price: 10.99 },
-            { id: 2, name: 'Product 2', price: 9.99 },
-            { id: 3, name: 'Product 3', price: 7.99 },
-        ];
 
-        products.forEach((product) => {
+        mockShoppingCartContext.items.forEach((product) => {
             expect(screen.getByText(`${product.name} - ${product.price}`)).toBeInTheDocument()
         });
     });
@@ -85,19 +88,13 @@ describe('ListProducts Component', () => {
 
         (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
 
-        const products = [
-            { id: 1, name: 'Product 1', price: 10.99 },
-            { id: 2, name: 'Product 2', price: 9.99 },
-            { id: 3, name: 'Product 3', price: 7.99 },
-        ];
-
         const { getByTestId } = render(
             <ShoppingCartContext.Provider value={mockShoppingCartContext}>
                 <ListProducts />
             </ShoppingCartContext.Provider>
         );
 
-        products.forEach((product) => {
+        mockShoppingCartContext.items.forEach((product) => {
 
             mockShoppingCartContext.items = [];
             const addToCartButton = getByTestId(`add-to-cart-${product.id}`);
@@ -105,7 +102,7 @@ describe('ListProducts Component', () => {
 
             fireEvent.click(addToCartButton);
 
-            expect(mockAddItem).toHaveBeenCalledWith(product);
+            expect(mockAddItem).toHaveBeenCalledWith({ ...product });
 
             expect(mockShoppingCartContext.items).toEqual([product]);
 
@@ -116,36 +113,4 @@ describe('ListProducts Component', () => {
 
         jest.useRealTimers();
     });
-    test('calls removeItem when "Remove to cart" button is clicked', () => {
-
-        const { getByTestId } = render(
-            <ShoppingCartContext.Provider value={mockShoppingCartContext}>
-                <ListProducts />
-            </ShoppingCartContext.Provider>
-        );
-
-        const products = [
-            { id: 1, name: 'Product 1', price: 10.99 },
-            { id: 2, name: 'Product 2', price: 9.99 },
-            { id: 3, name: 'Product 3', price: 7.99 },
-        ];
-
-        products.forEach((product) => {
-
-            mockShoppingCartContext.items = [];
-
-            fireEvent.click(getByTestId(`add-to-cart-${product.id}`));
-
-            expect(mockAddItem).toHaveBeenCalledWith(product);
-
-            expect(mockShoppingCartContext.items).toEqual([product]);
-
-            fireEvent.click(getByTestId(`remove-to-cart-${product.id}`));
-
-            expect(mockRemoveItem).toHaveBeenCalledWith(product);
-
-            expect(mockShoppingCartContext.items).toEqual([]);
-        });
-    });
-
 });

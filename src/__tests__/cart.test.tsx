@@ -55,7 +55,6 @@ describe('ShoppingCart Quantity Manipulation', () => {
 
     test('incrementQuantity increases item quantity by 1', () => {
         mockShoppingCartContext.incrementQuantity(mockItem.id);
-
         expect(mockIncrementQuantity).toHaveBeenCalledWith(mockItem.id);
         const updatedItem = mockShoppingCartContext.items.find(item => item.id === mockItem.id);
         expect(updatedItem?.quantity).toBe(2);
@@ -64,14 +63,16 @@ describe('ShoppingCart Quantity Manipulation', () => {
     test('decrementQuantity decreases item quantity by 1', () => {
         mockItem.quantity = 2;
         mockShoppingCartContext.items = [mockItem];
-
         mockShoppingCartContext.decrementQuantity(mockItem.id);
-
         expect(mockDecrementQuantity).toHaveBeenCalledWith(mockItem.id);
         const updatedItem = mockShoppingCartContext.items.find(item => item.id === mockItem.id);
         expect(updatedItem?.quantity).toBe(1);
     });
 
-
+    test('removeItem removes item from cart', () => {
+        mockShoppingCartContext.removeItem(mockItem);
+        expect(mockRemoveItem).toHaveBeenCalledWith(mockItem);
+        expect(mockShoppingCartContext.items).toEqual([]);
+    });
 
 });

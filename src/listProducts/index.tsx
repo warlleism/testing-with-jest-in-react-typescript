@@ -12,7 +12,7 @@ export default function ListProducts() {
         return null;
     }
 
-    const { addItem, removeItem } = shoppingCartContext;
+    const { addItem } = shoppingCartContext;
 
     const [products] = useState([
         { id: 1, name: "Product 1", price: 10.99 },
@@ -28,10 +28,6 @@ export default function ListProducts() {
         }, 1000)
     };
 
-    const handleRemoveClick = (product: any) => {
-        removeItem(product);
-    };
-
     return (
         <div>
             <div>teste</div>
@@ -40,7 +36,6 @@ export default function ListProducts() {
                     <li key={product.id}>
                         {product.name} - {product.price}
                         <button data-testid={`add-to-cart-${product.id}`} onClick={() => handleClick(product)}>Add to cart</button>
-                        <button data-testid={`remove-to-cart-${product.id}`} onClick={() => handleRemoveClick(product)}>Remove to cart</button>
                     </li>
                 ))}
             </ul>

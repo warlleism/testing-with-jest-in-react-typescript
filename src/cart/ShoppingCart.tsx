@@ -9,7 +9,7 @@ export default function ShoppingCart() {
     return null;
   }
 
-  const { items, incrementQuantity, decrementQuantity } = shoppingCartContext;
+  const { items, incrementQuantity, decrementQuantity, removeItem } = shoppingCartContext;
 
   return (
     <div>
@@ -21,6 +21,7 @@ export default function ShoppingCart() {
             </div>
             <div onClick={() => incrementQuantity(item.id)}>increment</div>
             <div onClick={() => decrementQuantity(item.id)}>decrement</div>
+            <div onClick={() => removeItem(item.id)}>remover</div>
           </div>
         ))
       }

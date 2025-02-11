@@ -20,7 +20,7 @@ export default function ShoppingCartProvider({ children }: { children: React.Rea
   };
 
   const removeItem = (item: any) => {
-    setItems(items.filter((i) => i !== item));
+    setItems(items.filter((i) => i.id !== item.id));
   };
 
   const incrementQuantity = (id: number) => {
