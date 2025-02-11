@@ -15,6 +15,9 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": [
+      "jest"
+    ]
   }
 }

@@ -1,13 +1,8 @@
-import './App.css'
-import Home from './home'
+import RoutesConfig from './routes/routes'
 
-function App() {
-
+export default function App() {
   return (
-    <>
-      <Home />
-    </>
+      <RoutesConfig />
   )
 }
 
-export default App
