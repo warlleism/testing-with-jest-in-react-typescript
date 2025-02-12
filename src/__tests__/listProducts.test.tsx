@@ -2,10 +2,11 @@ import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ShoppingCartContext } from '../context/CartProvider';
 import { useNavigate } from 'react-router-dom';
-import ListProducts from '../listProducts';
+import ListProducts from '../pages/listProducts';
 
-const mockAddItem = jest.fn();
+const mockAddItem = jest.fn(); //cria funções simuladas
 const mockSetItems = jest.fn();
+const mockNavigate = jest.fn();
 const mockRemoveItem = jest.fn();
 const mockIncrementQuantity = jest.fn();
 const mockDecrementQuantity = jest.fn();
@@ -75,16 +76,13 @@ describe('ListProducts Component', () => {
             </ShoppingCartContext.Provider>
         );
 
-
         mockShoppingCartContext.items.forEach((product) => {
             expect(screen.getByText(`${product.name} - ${product.price}`)).toBeInTheDocument()
         });
     });
 
     test('calls addItem and navigates to cart when "Add to cart" button is clicked', () => {
-        jest.useFakeTimers();
-
-        const mockNavigate = jest.fn();
+        jest.useFakeTimers(); //para setTimeout, setInterval, setImmediate
 
         (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
 
@@ -102,15 +100,15 @@ describe('ListProducts Component', () => {
 
             fireEvent.click(addToCartButton);
 
-            expect(mockAddItem).toHaveBeenCalledWith({ ...product });
+            expect(mockAddItem).toHaveBeenCalledWith(product);
 
             expect(mockShoppingCartContext.items).toEqual([product]);
 
-            jest.runAllTimers();
+            jest.runAllTimers(); //para setTimeout, setInterval, setImmediate
 
             expect(mockNavigate).toHaveBeenCalledWith('/cart');
         });
 
-        jest.useRealTimers();
+        jest.useRealTimers(); // Quando você ativou timers falsos (jest.useFakeTimers();) e quer voltar para os timers normais.
     });
 });

@@ -10,12 +10,10 @@ export default function Home() {
         { id: 3, name: "Bob Doe", email: "bob@example.com", active: true },
     ])
 
-
     const handleActive = (email: string) => {
         const newUser = user?.map((user) => user.email === email ? { ...user, active: !user.active } : user)
         setUser(newUser as any)
     }
-
 
     return (
         <>

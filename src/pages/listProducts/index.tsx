@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ShoppingCartContext } from "../context/CartProvider";
+import { ShoppingCartContext } from "../../context/CartProvider";
 
 
 export default function ListProducts() {

@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "../home";
-import Login from "../login";
-import ShoppingCart from "../cart/ShoppingCart";
-import ListProducts from "../listProducts";
+import Home from "../pages/home";
+import Login from "../pages/login";
 import ShoppingCartProvider from "../context/CartProvider";
+import ShoppingCart from "../pages/cart/ShoppingCart";
+import ListProducts from "../pages/listProducts";
 
 const RoutesConfig = () => {
     return (

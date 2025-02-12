@@ -38,12 +38,12 @@ const mockShoppingCartContext = {
             : items;
         mockSetItems(items);
     },
-    removeItem: (item: any) => {
-        mockShoppingCartContext.items = mockShoppingCartContext.items.filter((i: any) => i !== item);
-        mockRemoveItem(item);
+    removeItem: (id: number) => {
+        mockShoppingCartContext.items = mockShoppingCartContext.items.filter(i => i.id !== id);
+        mockRemoveItem(id);
     }
-};
 
+};
 
 describe('ShoppingCart Quantity Manipulation', () => {
     let mockItem: any;
@@ -61,17 +61,16 @@ describe('ShoppingCart Quantity Manipulation', () => {
     });
 
     test('decrementQuantity decreases item quantity by 1', () => {
-        mockItem.quantity = 2;
-        mockShoppingCartContext.items = [mockItem];
+        mockItem.quantity = 1;
         mockShoppingCartContext.decrementQuantity(mockItem.id);
         expect(mockDecrementQuantity).toHaveBeenCalledWith(mockItem.id);
         const updatedItem = mockShoppingCartContext.items.find(item => item.id === mockItem.id);
-        expect(updatedItem?.quantity).toBe(1);
+        expect(updatedItem?.quantity).toBe(0);
     });
 
     test('removeItem removes item from cart', () => {
-        mockShoppingCartContext.removeItem(mockItem);
-        expect(mockRemoveItem).toHaveBeenCalledWith(mockItem);
+        mockShoppingCartContext.removeItem(mockItem.id);
+        expect(mockRemoveItem).toHaveBeenCalledWith(mockItem.id);
         expect(mockShoppingCartContext.items).toEqual([]);
     });
 

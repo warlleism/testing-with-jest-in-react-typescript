@@ -19,12 +19,11 @@ export default function ShoppingCartProvider({ children }: { children: React.Rea
     setItems([...items, item]);
   };
 
-  const removeItem = (item: any) => {
-    setItems(items.filter((i) => i.id !== item.id));
+  const removeItem = (id: number) => {
+    setItems(items.filter((i) => i.id !== id));
   };
 
   const incrementQuantity = (id: number) => {
-
     const newItems = items.map((item) => {
       if (item.id === id) {
         return { ...item, quantity: item.quantity + 1 };
