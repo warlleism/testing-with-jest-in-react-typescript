@@ -10,13 +10,15 @@ export function usePostData(url: string) {
         setLoading(true);
 
         try {
-            const fetchResponse: { ok: boolean; json: () => Promise<{ title: string; completed: boolean; id: number }> } = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            });
+
+            const fetchResponse: { ok: boolean; json: () => Promise<{ title: string; completed: boolean; id: number }> } =
+                await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
 
             const responseData = await fetchResponse.json();
             setResponse(responseData);

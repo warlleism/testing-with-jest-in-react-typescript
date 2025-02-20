@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Login from '../pages/login';
+import Login from '../pages/login/login';
 
 describe('Login Component', () => {
     it('should render login form', () => {

@@ -12,11 +12,24 @@ const mockIncrementQuantity = jest.fn();
 const mockDecrementQuantity = jest.fn();
 
 const mockShoppingCartContext = {
+
+    items: [] as any[],
+
     addItem: (item: any) => {
         mockShoppingCartContext.items.push(item);
         mockAddItem(item);
     },
-    items: [] as any[],
+
+    setItems: (items: any) => {
+        mockShoppingCartContext.items = items;
+        mockSetItems(items);
+    },
+
+    removeItem: (item: any) => {
+        mockShoppingCartContext.items = mockShoppingCartContext.items.filter((i: any) => i !== item);
+        mockRemoveItem(item);
+    },
+
     incrementQuantity: (id: number) => {
         mockShoppingCartContext.items = mockShoppingCartContext.items.map((item: any) => {
             if (item.id === id) {
@@ -27,6 +40,7 @@ const mockShoppingCartContext = {
         });
         mockIncrementQuantity(id);
     },
+
     decrementQuantity: (id: number) => {
         mockShoppingCartContext.items = mockShoppingCartContext.items.map((item: any) => {
             if (item.id === id) {
@@ -36,17 +50,8 @@ const mockShoppingCartContext = {
             }
         });
         mockDecrementQuantity(id);
-    },
-    setItems: (items: React.SetStateAction<any[]>) => {
-        mockShoppingCartContext.items = typeof items === 'function'
-            ? items(mockShoppingCartContext.items)
-            : items;
-        mockSetItems(items);
-    },
-    removeItem: (item: any) => {
-        mockShoppingCartContext.items = mockShoppingCartContext.items.filter((i: any) => i !== item);
-        mockRemoveItem(item);
     }
+
 };
 
 jest.mock('react-router-dom', () => ({

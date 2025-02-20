@@ -17,7 +17,6 @@ describe('usePostData Hook', () => {
     test('should successfully post data', async () => {
         (fetch as jest.Mock).mockResolvedValueOnce({ //configuração do fetch para retornar uma resposta bem-sucedida (ok: true) com os dados fictícios (mockResponseData).
             ok: true,
-            status: 200,
             json: () => Promise.resolve(mockResponseData)
         });
 
