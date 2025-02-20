@@ -8,12 +8,7 @@ const mockSetSnap = jest.fn();
 
 const mockSnapContext = {
     snap: false,
-    setSnap: jest.fn((value: React.SetStateAction<boolean>) => {
-        mockSnapContext.snap = typeof value === 'function'
-            ? value(mockSnapContext.snap)
-            : value;
-        mockSetSnap(mockSnapContext.snap);
-    }) as React.Dispatch<React.SetStateAction<boolean>>
+    setSnap: mockSetSnap
 };
 
 
@@ -63,7 +58,7 @@ describe('Snap Component', () => {
 
     test("should toggle snap state multiple times when button is clicked", async () => {
 
-        const TestWrapper = () => {
+        const MockSstate = () => {
             const [snap, setSnap] = useState(false);
             return (
                 <SnapContext.Provider value={{ snap, setSnap }}>
@@ -72,7 +67,7 @@ describe('Snap Component', () => {
             );
         };
 
-        const { getByTestId } = render(<TestWrapper />);
+        const { getByTestId } = render(<MockSstate />);
 
         const button = getByTestId("button");
 
